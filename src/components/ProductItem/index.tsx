@@ -6,12 +6,14 @@ interface ProductItemProps {
     price: number
     title: string
   }
+  onAddToWishlist: (id: number) => Promise<void>
 }
 
-function ProductItemComponent({ product }: ProductItemProps) {
+function ProductItemComponent({ product, onAddToWishlist }: ProductItemProps) {
   return (
     <div>
       {product.title} - <strong>{product.price}</strong>
+      <button onClick={() => onAddToWishlist(product.id)} type='button'>Add to Wishlist</button>
     </div>
   )
 }
