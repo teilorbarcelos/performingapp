@@ -7,6 +7,13 @@ interface ResultProps {
   data: any[]
 }
 
+interface ProductProps {
+  id: number
+  price: number
+  title: string
+  formattedPrice: string
+}
+
 const Home: NextPage = () => {
   const [search, setSearch] = useState('')
   const [results, setResults] = useState<ResultProps>({
@@ -22,7 +29,7 @@ const Home: NextPage = () => {
     }
 
     const response = await fetch(`http://localhost:3333/products?q=${search}`)
-    const data = await response.json()
+    const data = await response.json() as ProductProps[]
 
     const formatter = new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -38,7 +45,7 @@ const Home: NextPage = () => {
       }
     })
 
-    const totalPrice = data.reduce((total, product) => {
+    const totalPrice = data.reduce((total: number, product: ProductProps) => {
       return total + product.price
     }, 0)
 
